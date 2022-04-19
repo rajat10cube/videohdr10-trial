@@ -3,7 +3,7 @@
     <center>
       <p>
         <H3 id="message3"></H3>
-        <h3>Below is the 16 bit PNG image with Linear gamma profile
+        <h3>A 16 bit PNG image with Linear gamma profile
         <a
           href="https://github.com/ellelstone/elles_icc_profiles/blob/master/profiles/Rec2020-elle-V4-g10.icc"
           >Rec2020-elle-V4-g10.icc</a
@@ -35,12 +35,12 @@
         'video/mp4; codecs="avc1.6e0033"'
       );
       RemoteCalibrator.init({ id: "session_022" });
-      message3.innerHTML = " <u>[ Browser Detected : <b> " + RemoteCalibrator.browser.value + "</b> ] </u> ";
+      message3.innerHTML = " Browser : " + RemoteCalibrator.browser.value ;
       if (isHVC1Supported == true) {
         //safari video
         message0.innerHTML = "HVC1 codec is supported by the browser (Checked using MediaSource.isTypeSupported) with following configuration :"
         message1.innerHTML =
-          "Below is the HDR video generated from this image using H.265 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+          "The HDR video generated from above image using H.265 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
         video.src = "safari_video.mp4";
         var msg =
           "hvc1 compiled using <b><u>libx265</b></u> codec with <b><u>yuv420p10le</u></b> pixel format, <br>";
@@ -54,7 +54,7 @@
         //chrome video
         message0.innerHTML = "MediaSource.isTypeSupported says that HVC1 codecs is not supported by your browser, so using AVC1 with the following configuration : "
         message1.innerHTML =
-          "Below is the HDR video generated from this image using H.264 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+          "The HDR video generated from above image using H.264 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
         video.src = "chrome_video.mp4";
         var msg =
           "avc1 compiled using <u>libx264</u> codec with <u>yuv420p10le</u> pixel format, <br>";
