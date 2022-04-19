@@ -19,15 +19,17 @@
     
     <img id="image" src="image.png" height="540" />
     <p id="message0"></p>
-    <h3><p id="message1"></p></h3>
+    <h3><span id="message1"></span><span id="message3"></span></h3>
     <video id="output-video" controls autoplay height="540"></video>
     <p id="message2"></p>
     </center>
+    <script src="https://cdn.jsdelivr.net/npm/remote-calibrator@latest"></script>
     <script>
       const message0 = document.getElementById("message0");
       const message1 = document.getElementById("message1");
       const video = document.getElementById("output-video");
       const message2 = document.getElementById("message2");
+      const message3 = document.getElementById("message3"); 
 
       const isHVC1Supported = MediaSource.isTypeSupported(
         'video/mp4; codecs="hvc1"'
@@ -35,6 +37,8 @@
       const isAVC1Supported = MediaSource.isTypeSupported(
         'video/mp4; codecs="avc1.6e0033"'
       );
+      RemoteCalibrator.init({ id: "session_022" });
+      message3.innerHTML = " <u>[ Browser Detected : <b> " + RemoteCalibrator.browser.value + "</b> ] </u> ";
       if (isHVC1Supported == true) {
         //safari video
         message0.innerHTML = "HVC1 codecs is supported by the browser (Checked using MediaSource.isTypeSupported)"
