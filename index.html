@@ -9,18 +9,20 @@
           >Rec2020-elle-V4-g10.icc</a
         >
       </p>
-      The PNG image has four colored vertical bands: Red Green Blue Gray. Each
-      colored band consists of four repetitions of a pair of stripes. That pair
-      consists of a solid and a dithered stripe. All the solid stripe pixels are
-      set to 0.5 of the relevant RGB components. The matching dithered stripe
-      alternates pixels that are brighter or darker than 0.5, so that if they
-      are optically averaged the mean will match that of the solid stripe. The
-      dither contrast is 100% at the top (e.g. for gray we alternate black and
-      white) and fades linearly to 0% at the bottom (identical to the solid
-      stripe). The linear gamma of the image, with correct color management of
-      the display will result in the dithered and solid stripes being identical
-      after optical blur. But the dither should be visible through a microscope.
-
+      <p>
+        The PNG image has four colored vertical bands: Red Green Blue Gray. Each
+        colored band consists of four repetitions of a pair of stripes. That
+        pair consists of a solid and a dithered stripe. All the solid stripe
+        pixels are set to 0.5 of the relevant RGB components. The matching
+        dithered stripe alternates pixels that are brighter or darker than 0.5,
+        so that if they are optically averaged the mean will match that of the
+        solid stripe. The dither contrast is 100% at the top (e.g. for gray we
+        alternate black and white) and fades linearly to 0% at the bottom
+        (identical to the solid stripe). The linear gamma of the image, with
+        correct color management of the display will result in the dithered and
+        solid stripes being identical after optical blur. But the dither should
+        be visible through a microscope.
+      </p>
       <img id="image" src="image.png" height="540" />
       <hr />
       <h3><span id="message1"></span></h3>
