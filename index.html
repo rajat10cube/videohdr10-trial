@@ -3,19 +3,13 @@
     <center>
       <p>
         <H3 id="message3"></H3>
-        <h3>Below is the 10 bit PNG image with Linear gamma profile
+        <h3>Below is the 16 bit PNG image with Linear gamma profile
         <a
           href="https://github.com/ellelstone/elles_icc_profiles/blob/master/profiles/Rec2020-elle-V4-g10.icc"
           >Rec2020-elle-V4-g10.icc</a
         ></h3>
         <br />
-        The below image has 16 stripes [ 4 of each color ] that consists of alternating 
-        pixels with values A and B(dithered stripe). Next to each of them we have another 
-        16 stripes in which all the pixels are set to (A+B)/2(solid stripe). Since the 
-        image is linear, the optically averaged dithered stripe is physically
-        identical to the solid stripe. if there is any nonlinearity then, most
-        likely, the two stripes would have been physically different and the
-        difference would have been apparent as a difference in brightness.
+        The PNG image has four colored vertical bands: Red Green Blue Gray. Each colored band consists of four repetitions of a pair of stripes. That pair consists of a solid and a dithered stripe. All the solid stripe pixels are set to 0.5 of the relevant RGB components. The matching dithered stripe alternates pixels that are brighter or darker than 0.5, so that if they are optically averaged the mean will match that of the solid stripe. The dither contrast is 100% at the top (e.g. for gray we alternate black and white) and fades linearly to 0% at the bottom (identical to the solid stripe). The linear gamma of the image, with correct color management of the display will result in the dithered and solid stripes being identical after optical blur. But the dither should be visible through a microscope.
       </p>
     
     <img id="image" src="image.png" height="540" />
@@ -58,12 +52,12 @@
         console.log(msg);
       } else if (isAVC1Supported == true) {
         //chrome video
-        message0.innerHTML = "HVC1 codec is not supported by the browser, so using AVC1 (Checked using MediaSource.isTypeSupported) with following configuration : "
+        message0.innerHTML = "MediaSource.isTypeSupported says that HVC1 codecs is not supported by your browser, so using AVC1 with the following configuration : "
         message1.innerHTML =
           "Below is the HDR video generated from this image using H.264 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
         video.src = "chrome_video.mp4";
         var msg =
-          "avc1 compiled using <b><u>libx264</b></u> codec with <b><u>yuv420p10le</u></b> pixel format, <br>";
+          "avc1 compiled using <u>libx264</u> codec with <u>yuv420p10le</u> pixel format, <br>";
         msg +=
           "color_range=pc, colorprim=bt2020, transfer=smpte2084, colormatrix=bt2020nc";
         message2.innerHTML = msg;
