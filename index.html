@@ -1,101 +1,70 @@
 <html>
   <body>
-    <!-- <canvas id="canvas"></canvas> -->
-    <!-- <img src="sRGB.png" alt="" />
-    <img src="sRGB no colorspace.jpg" alt="" />
-    <img src="sRGB embed color.jpg" alt="" />
-    <img src="sRGB both colorspace.jpg" alt="" /> -->
     <center>
-      <img src="g10pic1.png" alt="" width="480" />
       <p>
-        Linear Gamma 16 bit PNG image with AllColorsRGB-elle-V4-g10.icc profile
+        <h3>Below is the 10 bit PNG image with Linear gamma profile
+        <a
+          href="https://github.com/ellelstone/elles_icc_profiles/blob/master/profiles/Rec2020-elle-V4-g10.icc"
+          >Rec2020-elle-V4-g10.icc</a
+        ></h3>
+        <br />
+        The below image has 16 stripes [ 4 of each color ] that consists of alternating 
+        pixels with values A and B(dithered stripe). Next to each of them we have another 
+        16 stripes in which all the pixels are set to (A+B)/2(solid stripe). Since the 
+        image is linear, the optically averaged dithered stripe is physically
+        identical to the solid stripe. if there is any nonlinearity then, most
+        likely, the two stripes would have been physically different and the
+        difference would have been apparent as a difference in brightness.
       </p>
-      <hr />
-      <video src="video2.mp4" controls autoplay></video>
-      <p>
-        Video generated from the image using ffmpeg.wasm with brightness set to
-        0.185
-      </p>
-      <!-- <img src="sRGB pic1.jpg" alt="" /> -->
-      <!-- <img src="g10.png" alt="" width="300" />
-      <p>Linear Gamma PNG</p>
-      <hr />
-      <img src="g10 no colorspace.jpg" alt="" width="300" />
-      <p>Linear Gamma JPG no colorspace option selected while exporting</p>
-      <hr />
-      <img src="g10 embed color.jpg" alt="" width="300" />
-      <p>
-        Linear Gamma JPG embed color Profile option selected while exporting
-      </p>
-      <hr />
-      <img src="g10 both colorspace.jpg" alt="" width="300" />
-      <p>
-        Linear Gamma JPG convert to sRGB and embed color Profile option selected
-      </p> -->
-      <!-- <img src="download.png" alt="" />
-      <h4 style="text-decoration: underline">Linear Gamma</h4>
-      <table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr align="top">
-            <td align="right">
-              <p align="center">g10 both options ticked.jpg</p>
-              <img src="g10 both colorspace.jpg" />
-            </td>
-            <td align="left">
-              <p align="center">g10 embed color.jpg</p>
-              <img src="g10 embed color.jpg" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <img src="g10 no colorspace.jpg" />
-              <p align="center">g10 no colorspace.jpg</p>
-            </td>
-            <td align="left">
-              <img src="g10.png" />
-              <p align="center">g10.png</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <h4 style="text-decoration: underline">sRGB</h4>
-      <table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr align="top">
-            <td align="right">
-              <p align="center">sRGB both colorspace.jpg</p>
-              <img src="sRGB both colorspace.jpg" />
-            </td>
-            <td align="left">
-              <p align="center">sRGB embed color.jpg</p>
-              <img src="sRGB embed color.jpg" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right">
-              <img src="sRGB no colorspace.jpg" />
-              <p align="center">sRGB no colorspace.jpg</p>
-            </td>
-            <td align="left">
-              <img src="sRGB.png" />
-              <p align="center">sRGB.png</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <video src="video.mp4" controls autoplay></video> -->
+    
+    <img id="image" src="image.png" height="540" />
+    <p id="message0"></p>
+    <h3><p id="message1"></p></h3>
+    <video id="output-video" controls autoplay height="540"></video>
+    <p id="message2"></p>
     </center>
+    <script>
+      const message0 = document.getElementById("message0");
+      const message1 = document.getElementById("message1");
+      const video = document.getElementById("output-video");
+      const message2 = document.getElementById("message2");
 
-    <!-- <script>
-      var canvas = document.getElementById("canvas");
-      var ctx = canvas.getContext("2d");
-      var img = new Image(); // Create new img element
-      img.onload = function () {
-        ctx.drawImage(img, 0, 0);
-      };
-      img.src = "pic1.png"; // Set source path
-    </script> -->
+      const isHVC1Supported = MediaSource.isTypeSupported(
+        'video/mp4; codecs="hvc1"'
+      );
+      const isAVC1Supported = MediaSource.isTypeSupported(
+        'video/mp4; codecs="avc1.6e0033"'
+      );
+      if (isHVC1Supported == true) {
+        //safari video
+        message0.innerHTML = "HVC1 codecs is supported by the browser (Checked using MediaSource.isTypeSupported)"
+        message1.innerHTML =
+          "Below is the HDR video generated from this image using H.265 Codecs with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+        video.src = "safari_video.mp4";
+        var msg =
+          "hvc1 compiled using <b><u>libx265</b></u> codecs with <b><u>yuv420p10le</u></b> pixel format, <br>";
+        msg +=
+          "color_range=pc, colorprim=bt2020, transfer=smpte2084, colormatrix=bt2020nc";
+        msg += "<br> Currently it seems the video generated with H.265 codecs is changing the color profile of the video while conversion. "
+        msg += "<br>Please try using Chrome for now as the codecs H.264 which is generating correct video is not playable in Safari."
+        message2.innerHTML = msg;
+        console.log(msg);
+      } else if (isAVC1Supported == true) {
+        //chrome video
+        message0.innerHTML = "HVC1 codecs is not supported by the browser, so using AVC1 (Checked using MediaSource.isTypeSupported)"
+        message1.innerHTML =
+          "Below is the HDR video generated from this image using H.264 Codecs with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+        video.src = "chrome_video.mp4";
+        var msg =
+          "avc1 compiled using <b><u>libx264</b></u> codecs with <b><u>yuv420p10le</u></b> pixel format, <br>";
+        msg +=
+          "color_range=pc, colorprim=bt2020, transfer=smpte2084, colormatrix=bt2020nc";
+        message2.innerHTML = msg;
+        console.log(msg);
+      } else {
+        message1.innerHTML =
+          "Both hvc1 and avc1.6e0033 codecs not supported by your browser. Please use CHROME or SAFARI";
+      }
+    </script>
   </body>
 </html>
