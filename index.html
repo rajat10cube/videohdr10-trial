@@ -2,6 +2,7 @@
   <body>
     <center>
       <p>
+        <H3 id="message3"></H3>
         <h3>Below is the 10 bit PNG image with Linear gamma profile
         <a
           href="https://github.com/ellelstone/elles_icc_profiles/blob/master/profiles/Rec2020-elle-V4-g10.icc"
@@ -18,10 +19,12 @@
       </p>
     
     <img id="image" src="image.png" height="540" />
+    <hr>
+    <h3><span id="message1"></span></h3>
     <p id="message0"></p>
-    <h3><span id="message1"></span><span id="message3"></span></h3>
-    <video id="output-video" controls autoplay height="540"></video>
     <p id="message2"></p>
+    <video id="output-video" controls autoplay height="540"></video>
+    
     </center>
     <script src="https://cdn.jsdelivr.net/npm/remote-calibrator@latest"></script>
     <script>
@@ -41,33 +44,33 @@
       message3.innerHTML = " <u>[ Browser Detected : <b> " + RemoteCalibrator.browser.value + "</b> ] </u> ";
       if (isHVC1Supported == true) {
         //safari video
-        message0.innerHTML = "HVC1 codecs is supported by the browser (Checked using MediaSource.isTypeSupported)"
+        message0.innerHTML = "HVC1 codec is supported by the browser (Checked using MediaSource.isTypeSupported) with following configuration :"
         message1.innerHTML =
-          "Below is the HDR video generated from this image using H.265 Codecs with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+          "Below is the HDR video generated from this image using H.265 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
         video.src = "safari_video.mp4";
         var msg =
-          "hvc1 compiled using <b><u>libx265</b></u> codecs with <b><u>yuv420p10le</u></b> pixel format, <br>";
+          "hvc1 compiled using <b><u>libx265</b></u> codec with <b><u>yuv420p10le</u></b> pixel format, <br>";
         msg +=
           "color_range=pc, colorprim=bt2020, transfer=smpte2084, colormatrix=bt2020nc";
-        msg += "<br> Currently it seems the video generated with H.265 codecs is changing the color profile of the video while conversion. "
-        msg += "<br>Please try using Chrome for now as the codecs H.264 which is generating correct video is not playable in Safari."
+        msg += "<br> Currently it seems the video generated with H.265 codec is changing the color profile of the video while conversion. "
+        msg += "<br>Please try using Chrome for now as the codec H.264 which is generating correct video is not playable in Safari."
         message2.innerHTML = msg;
         console.log(msg);
       } else if (isAVC1Supported == true) {
         //chrome video
-        message0.innerHTML = "HVC1 codecs is not supported by the browser, so using AVC1 (Checked using MediaSource.isTypeSupported)"
+        message0.innerHTML = "HVC1 codec is not supported by the browser, so using AVC1 (Checked using MediaSource.isTypeSupported) with following configuration : "
         message1.innerHTML =
-          "Below is the HDR video generated from this image using H.264 Codecs with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
+          "Below is the HDR video generated from this image using H.264 Codec with <a target='_blank' href='https://github.com/ffmpegwasm/ffmpeg.wasm'>ffmpeg.wasm</a>";
         video.src = "chrome_video.mp4";
         var msg =
-          "avc1 compiled using <b><u>libx264</b></u> codecs with <b><u>yuv420p10le</u></b> pixel format, <br>";
+          "avc1 compiled using <b><u>libx264</b></u> codec with <b><u>yuv420p10le</u></b> pixel format, <br>";
         msg +=
           "color_range=pc, colorprim=bt2020, transfer=smpte2084, colormatrix=bt2020nc";
         message2.innerHTML = msg;
         console.log(msg);
       } else {
         message1.innerHTML =
-          "Both hvc1 and avc1.6e0033 codecs not supported by your browser. Please use CHROME or SAFARI";
+          " Both hvc1 codec and avc1.6e0033 codec are not supported by your browser. Please use CHROME or SAFARI ";
       }
     </script>
   </body>
