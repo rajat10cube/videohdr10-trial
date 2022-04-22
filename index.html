@@ -1,6 +1,7 @@
 <html>
   <body>
     <center>
+      <video src="out.mp4"></video>
       <p style="font-size: large; font-weight: bold" id="message3"></p>
       <p style="font-size: larger; font-weight: bold">
         A 16 bit PNG image with linear gamma profile
@@ -23,12 +24,12 @@
         solid stripes being identical after optical blur. But the dither should
         be visible through a microscope.
       </p>
-      <img id="image" src="image.png" height="540" />
+      <img id="image" src="image.png" />
       <hr />
       <h3><span id="message1"></span></h3>
       <div><span id="message0"></span><span id="message2"></span></div>
 
-      <video id="output-video" controls autoplay height="540"></video>
+      <video id="output-video" controls autoplay></video>
     </center>
     <script src="https://cdn.jsdelivr.net/npm/remote-calibrator@latest"></script>
     <script>
